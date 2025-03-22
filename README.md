@@ -1,6 +1,6 @@
-# TheUnsentProject x Wallpaper Engine
+# `TheUnsentProject.com` x Wallpaper Engine
 
-`theunsentproject.com` for Wallpaper Engine
+Re-write in React of my wallpaper (Original project: [5tsuki/we-theunsentproject](https://github.com/5tsuki/we-theunsentproject), written in vanilla JavaScript)
 
 > [!NOTE]
 > TheUnsentProject: A Collection Of Unsent Text Messages To First Loves
