@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react"
 import { colors } from "$/constants/colors"
+import { getTextColor } from "$/utils/colors"
 
 type Props = {
   name: string
@@ -12,6 +13,8 @@ const Card: FunctionComponent<Props> = ({
   message,
   color
 }) => {
+  const textColor = colors[color].split(", ").map(Number) as [number, number, number]
+
   return (
     <div
       className="card-border flex flex-col bg-white w-[350px] h-[400px] p-[5px] gap-[5px]"
@@ -27,7 +30,10 @@ const Card: FunctionComponent<Props> = ({
         className="flex-1 p-[5px]"
         style={{ backgroundColor: `rgb(${colors[color]})` }}
       >
-        <p className="text-2xl">
+        <p
+          className="text-2xl"
+          style={{ color: getTextColor(...textColor) }}
+        >
           {message}
         </p>
       </section>
