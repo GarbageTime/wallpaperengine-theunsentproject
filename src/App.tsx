@@ -7,6 +7,7 @@ import { queryUrl } from "$/utils/url"
 import useWallpaperEngine from "$/hooks/useWallpaperEngine"
 import { postsNumber } from "$/stores/postsNumber"
 import { POSTS_PER_PAGE } from "$/constants/theunsentproject"
+import { useDebounce } from "$/hooks/useDebounce"
 
 const App: FunctionComponent = () => {
   const backgroundRef = useRef<HTMLDivElement>(null)
@@ -16,8 +17,10 @@ const App: FunctionComponent = () => {
   const setPostsNumber = postsNumber.use.setPostsNumber()
   const totalPostsNumber = postsNumber.use.postsNumber()
 
+  const nameQueryKey = useDebounce(name, 250)
+
   const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ["theunsentproject", name, totalPostsNumber],
+    queryKey: ["theunsentProject", nameQueryKey, totalPostsNumber],
     queryFn: async () => {
       const randomPage = Math.floor(Math.random() * Math.floor(totalPostsNumber / POSTS_PER_PAGE))
       const url = queryUrl(randomPage, name)
