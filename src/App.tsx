@@ -1,4 +1,4 @@
-import { FunctionComponent, useRef } from "react"
+import { FunctionComponent, useEffect, useMemo, useRef } from "react"
 import Card from "$/components/Card"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import axios from "axios"
@@ -22,9 +22,6 @@ const App: FunctionComponent = () => {
       const randomPage = Math.floor(Math.random() * Math.floor(totalPostsNumber / POSTS_PER_PAGE))
       const url = queryUrl(randomPage, name)
       const res = await axios.get<PostsResponse>(url)
-
-      setPostsNumber(res.data.count)
-
       return res.data
     },
     placeholderData: keepPreviousData,
@@ -33,15 +30,27 @@ const App: FunctionComponent = () => {
     gcTime: Infinity
   })
 
+  const post = useMemo(() => {
+    if (isPending || isError) {
+      return undefined
+    }
+
+    return data.posts[Math.floor(Math.random() * data.posts.length)]
+  }, [isPending, isError, data])
+
+  useEffect(() => {
+    setPostsNumber(data?.count ?? 0)
+  }, [data])
+
   return (
     <main
       ref={backgroundRef}
       className="w-screen h-screen grid place-items-center"
     >
       {
-        isPending || isError
+        !post
           ? <Card name="atlantis" message="a message to myself." color="light-blue" />
-          : <Card {...(data.posts[Math.floor(Math.random() * data.posts.length)])} />
+          : <Card name={post.name} message={post.message} color={post.color} />
       }
       {
         import.meta.env.DEV && <div className="flex gap-2 *:bg-white *:px-4 *:py-2">
