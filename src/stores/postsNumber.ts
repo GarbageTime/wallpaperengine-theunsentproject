@@ -13,7 +13,7 @@ const usePostsNumber = create<PostsNumberStore>()(
     persist(
       (set) => ({
         postsNumber: 0,
-        setPostsNumber: (postsNumber) => set(() => ({ postsNumber })),
+        setPostsNumber: (postsNumber) => set({ postsNumber }),
       }),
       {
         name: "posts-number",
