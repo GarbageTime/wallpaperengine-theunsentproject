@@ -7,9 +7,7 @@ type Options = {
   backgroundRef: RefObject<HTMLDivElement | null>
 }
 
-const useWallpaperEngine = ({
-  backgroundRef,
-}: Options) => {
+const useWallpaperEngine = ({ backgroundRef }: Options) => {
   const name = requestParams.use.name()
   const setName = requestParams.use.setName()
   const delay = requestParams.use.delay()
@@ -23,7 +21,11 @@ const useWallpaperEngine = ({
           const [red, green, blue] = properties.background.value.split(" ")
 
           if (backgroundRef.current) {
-            backgroundRef.current.style.backgroundColor = floatToHex(red, green, blue)
+            backgroundRef.current.style.backgroundColor = floatToHex(
+              red,
+              green,
+              blue
+            )
           }
         }
 
@@ -35,7 +37,7 @@ const useWallpaperEngine = ({
           setPostsNumber(0)
           setName(properties.name.value)
         }
-      },
+      }
     }
 
     return () => {

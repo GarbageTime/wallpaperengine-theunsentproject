@@ -10,16 +10,13 @@ type RequestParamsStore = {
 }
 
 const useRequestParams = create<RequestParamsStore>()(
-  immer(
-    (set) => ({
-      name: "",
-      setName: (name: string) => set({ name }),
-      delay: 60,
-      setDelay: (delay: number) => set({ delay }),
-    })
-  )
+  immer((set) => ({
+    name: "",
+    setName: (name: string) => set({ name }),
+    delay: 60,
+    setDelay: (delay: number) => set({ delay })
+  }))
 )
-
 
 export const requestParams = createSelectors(useRequestParams)
 

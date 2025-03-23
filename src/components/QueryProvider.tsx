@@ -1,6 +1,6 @@
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { FunctionComponent, PropsWithChildren } from "react";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { FunctionComponent, PropsWithChildren } from "react"
 
 const queryClient = new QueryClient()
 

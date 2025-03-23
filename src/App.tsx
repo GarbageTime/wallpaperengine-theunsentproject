@@ -1,4 +1,10 @@
-import { FunctionComponent, useCallback, useEffect, useMemo, useRef } from "react"
+import {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from "react"
 import Card from "$/components/Card"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import axios from "axios"
@@ -22,7 +28,9 @@ const App: FunctionComponent = () => {
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["theunsentProject", nameQueryKey, totalPostsNumber],
     queryFn: async () => {
-      const randomPage = Math.floor(Math.random() * Math.floor(totalPostsNumber / POSTS_PER_PAGE))
+      const randomPage = Math.floor(
+        Math.random() * Math.floor(totalPostsNumber / POSTS_PER_PAGE)
+      )
       const url = queryUrl(randomPage, name)
       const res = await axios.get<PostsResponse>(url)
       return res.data
@@ -62,16 +70,20 @@ const App: FunctionComponent = () => {
   return (
     <main
       ref={backgroundRef}
-      className="w-screen h-screen grid place-items-center"
+      className="grid h-screen w-screen place-items-center"
     >
-      {
-        !post
-          ? <Card name="atlantis" message="a message to myself." color="light-blue" />
-          : <Card name={post.name} message={post.message} color={post.color} />
-      }
+      {!post ? (
+        <Card
+          name="atlantis"
+          message="a message to myself."
+          color="light-blue"
+        />
+      ) : (
+        <Card name={post.name} message={post.message} color={post.color} />
+      )}
 
-      {
-        import.meta.env.DEV && <div className="bg-black p-2 flex items-center justify-center gap-2 *:bg-white *:px-4 *:py-2">
+      {import.meta.env.DEV && (
+        <div className="flex items-center justify-center gap-2 bg-black p-2 *:bg-white *:px-4 *:py-2">
           <div>
             <input
               type="text"
@@ -81,11 +93,7 @@ const App: FunctionComponent = () => {
             />
           </div>
 
-          <button
-            onClick={() => handleNameChange("")}
-          >
-            Clear name
-          </button>
+          <button onClick={() => handleNameChange("")}>Clear name</button>
 
           <div>
             <input
@@ -95,11 +103,9 @@ const App: FunctionComponent = () => {
             />
           </div>
 
-          <button onClick={() => refetch()}>
-            Refetch
-          </button>
+          <button onClick={() => refetch()}>Refetch</button>
         </div>
-      }
+      )}
     </main>
   )
 }

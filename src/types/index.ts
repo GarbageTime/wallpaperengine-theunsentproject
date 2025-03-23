@@ -1,3 +1,5 @@
 declare global {
-  interface Window { wallpaperPropertyListener: any; }
+  interface Window {
+    wallpaperPropertyListener: any
+  }
 }

@@ -8,32 +8,24 @@ type Props = {
   color: keyof typeof colors
 }
 
-const Card: FunctionComponent<Props> = ({
-  name,
-  message,
-  color
-}) => {
-  const textColor = colors[color].split(", ").map(Number) as [number, number, number]
+const Card: FunctionComponent<Props> = ({ name, message, color }) => {
+  const textColor = colors[color].split(", ").map(Number) as [
+    number,
+    number,
+    number
+  ]
 
   return (
-    <div
-      className="card-border flex flex-col bg-white w-[350px] h-[400px] p-[5px] gap-[5px]"
-    >
-
+    <div className="card-border flex h-[400px] w-[350px] flex-col gap-[5px] bg-white p-[5px]">
       <header>
-        <p className="text-lg text-center">
-          To: {name}
-        </p>
+        <p className="text-center text-lg">To: {name}</p>
       </header>
 
       <section
         className="flex-1 p-[5px]"
         style={{ backgroundColor: `rgb(${colors[color]})` }}
       >
-        <p
-          className="text-2xl"
-          style={{ color: getTextColor(...textColor) }}
-        >
+        <p className="text-2xl" style={{ color: getTextColor(...textColor) }}>
           {message}
         </p>
       </section>
@@ -43,7 +35,6 @@ const Card: FunctionComponent<Props> = ({
         <p>#unsentproject x atlantis</p>
         <b>Back</b>
       </footer>
-
     </div>
   )
 }
