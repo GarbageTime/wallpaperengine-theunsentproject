@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent, useRef } from "react"
 import Card from "$/components/Card"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import axios from "axios"
@@ -9,7 +9,10 @@ import { postsNumber } from "$/stores/postsNumber"
 import { POSTS_PER_PAGE } from "$/constants/theunsentproject"
 
 const App: FunctionComponent = () => {
-  const { backgroundColor, name, delay, setName } = useWallpaperEngine()
+  const backgroundRef = useRef<HTMLDivElement>(null)
+
+  const { name, delay, setName } = useWallpaperEngine({ backgroundRef })
+
   const setPostsNumber = postsNumber.use.setPostsNumber()
   const totalPostsNumber = postsNumber.use.postsNumber()
 
@@ -32,8 +35,8 @@ const App: FunctionComponent = () => {
 
   return (
     <main
+      ref={backgroundRef}
       className="w-screen h-screen grid place-items-center"
-      style={{ backgroundColor }}
     >
       {
         isPending || isError

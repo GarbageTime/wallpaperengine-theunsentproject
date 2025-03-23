@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react"
+import { RefObject, useEffect, useState } from "react"
 import { floatToHex } from "$/utils/colors"
 import { postsNumber } from "$/stores/postsNumber"
 
-const useWallpaperEngine = () => {
+type Options = {
+  backgroundRef: RefObject<HTMLDivElement | null>
+}
+
+const useWallpaperEngine = ({
+  backgroundRef,
+}: Options) => {
   const [name, setName] = useState<string>()
-  const [backgroundColor, setBackgroundColor] = useState<string>("#000000")
   const [delay, setDelay] = useState<number>(60)
   const setPostsNumber = postsNumber.use.setPostsNumber()
 
@@ -13,7 +18,9 @@ const useWallpaperEngine = () => {
       applyUserProperties: function (properties: any) {
         if (properties.background) {
           const [red, green, blue] = properties.background.value.split(" ")
-          setBackgroundColor(floatToHex(red, green, blue))
+          if (backgroundRef.current) {
+            backgroundRef.current.style.backgroundColor = floatToHex(red, green, blue)
+          }
         }
 
         if (properties.delay) {
@@ -33,7 +40,6 @@ const useWallpaperEngine = () => {
   }, [])
 
   return {
-    backgroundColor,
     name,
     delay,
     setName
