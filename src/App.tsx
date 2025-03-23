@@ -16,21 +16,21 @@ const App: FunctionComponent = () => {
   const setPostsNumber = postsNumber.use.setPostsNumber()
   const totalPostsNumber = postsNumber.use.postsNumber()
 
-  const { data: post, isPending, isError, refetch } = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["theunsentproject", name],
     queryFn: async () => {
       const randomPage = Math.floor(Math.random() * Math.floor(totalPostsNumber / POSTS_PER_PAGE))
       const url = queryUrl(randomPage, name)
       const res = await axios.get<PostsResponse>(url)
+
+      setPostsNumber(res.data.count)
+
       return res.data
-    },
-    select: (data) => {
-      setPostsNumber(data.count)
-      const items = data.posts
-      return items[Math.floor(Math.random() * items.length)];
     },
     placeholderData: keepPreviousData,
     refetchInterval: delay * 1000,
+    staleTime: 0,
+    gcTime: Infinity
   })
 
   return (
@@ -41,7 +41,7 @@ const App: FunctionComponent = () => {
       {
         isPending || isError
           ? <Card name="atlantis" message="a message to myself." color="light-blue" />
-          : <Card name={post.name} message={post.message} color={post.color} />
+          : <Card {...(data.posts[Math.floor(Math.random() * data.posts.length)])} />
       }
       {
         import.meta.env.DEV && <div className="flex gap-2 *:bg-white *:px-4 *:py-2">
